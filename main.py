@@ -8,6 +8,10 @@ from src.views import views
 
 
 def main() -> Any:
+    """
+    Главная функция для запуска функций работы программы
+    :return:
+    """
     date_obj = datetime.now()
     valid_year = False
     valid_month = False
