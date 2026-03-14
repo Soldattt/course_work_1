@@ -3,7 +3,7 @@
 ## Установка
 1. Клонируйте репозиторий:
 ```
-git clone https://github.com/Soldattt/.git
+git clone https://github.com/Soldattt/course_work_1.git
 ```
 2. Установите зависимости:
 ```
