@@ -32,19 +32,15 @@ def open_excel_file(path: str = path_excel) -> Any:
     file_logger.setLevel(logging.INFO)
     file_logger.info("Начало работы функции open_excel_file")
     try:
-        try:
-            file_logger.info("Считывание данных из файла")
-            excel_reader = pd.read_excel(path)
-            return excel_reader
-        except ValueError:
-            file_logger.critical("Файл не может быть прочтен")
-            return "Ошибка в данных файла"
+        file_logger.info("Считывание данных из файла")
+        excel_reader = pd.read_excel(path)
+        return excel_reader
     except FileNotFoundError:
         file_logger.critical("Файл отсутствует")
         return "Файл не найден"
 
 
-def data_for_json(greeting: str, path: str, data: Any = open_excel_file()) -> Any:
+def data_for_json(greeting: str, data: Any = open_excel_file()) -> Any:
     """
     Функция принимает на вход приветствие и список транзакций и производит выборку необходимых данных
     в соответствии с ТЗ, затем передает словарь с данными для записи в json файл
@@ -166,7 +162,7 @@ def data_for_json(greeting: str, path: str, data: Any = open_excel_file()) -> An
     stock_prices.append(stocks_googl)
 
     result_dict["stock_prices"] = stock_prices
-    return write_to_file(result_dict, path)
+    return result_dict
 
 
 def write_to_file(result_dict: dict, path: str) -> Any:
@@ -179,15 +175,8 @@ def write_to_file(result_dict: dict, path: str) -> Any:
     json_logger.addHandler(console_handler)
     json_logger.setLevel(logging.INFO)
     json_logger.info("Начало работы функции write_to_file")
-    try:
-        try:
-            json_logger.info("Производится запись данных в файл")
-            with open(f"{path}", "w", encoding="utf-8") as f:
-                json.dump(result_dict, f, ensure_ascii=False)
-                return "Данные записаны в Ваш файл"
-        except json.JSONDecodeError:
-            json_logger.critical("Ошибка в данных файла")
-            return "Ошибка в данных файла"
-    except FileNotFoundError:
-        json_logger.critical("Файл отсутствует")
-        return "Указанный файл не найден"
+
+    json_logger.info("Производится запись данных в файл")
+    with open(f"{path}", "w", encoding="utf-8") as f:
+        json.dump(result_dict, f, ensure_ascii=False)
+        return "Данные записаны в Ваш файл"

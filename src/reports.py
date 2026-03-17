@@ -1,13 +1,11 @@
 import datetime
 import logging
 import os
-
-from typing import Any
 from datetime import datetime
+from typing import Any
 
 import pandas as pd
 from dateutil.relativedelta import relativedelta
-
 
 from src.utils import open_excel_file
 
@@ -33,14 +31,14 @@ def spending_by_category(spending_category: str, date: str = None, data: Any = o
         date = datetime.now()
     else:
         category_logger.info("Сортировка по дате и категории")
-        date = datetime.strptime(date, "%d.%m.%Y")
+        date = datetime.strptime(date, r"%d.%m.%Y")
     start_date = date - relativedelta(months=3)
     filtered_df = df[
         (df["Дата операции"] >= start_date) & (df["Дата операции"] <= date) & (df["Категория"] == spending_category)
     ]
-    if filtered_df:
-        category_logger.info("Вывод данных")
-        return filtered_df
-    else:
+    if filtered_df.to_dict().get("Дата операции") == {}:
         category_logger.error("Данных не обнаружено")
         return "Транзакций по введенным данным не обнаружено"
+    else:
+        category_logger.info("Вывод данных")
+        return filtered_df
