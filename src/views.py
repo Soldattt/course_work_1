@@ -1,7 +1,7 @@
 import logging
 import os
 
-from src.utils import data_for_json
+from src.utils import data_for_json, write_to_file
 
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 path_operations = os.path.join(project_root, "data", "operations.json")
@@ -27,4 +27,4 @@ def views(date_obj):
         greeting = "Добрый день"
     else:
         greeting = "Добрый вечер"
-    return data_for_json(greeting, path_operations)
+    return write_to_file(data_for_json(greeting), path_operations)

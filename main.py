@@ -8,12 +8,16 @@ from src.views import views
 
 
 def main() -> Any:
+    """
+    Главная функция для запуска функций работы программы
+    :return:
+    """
     date_obj = datetime.now()
     valid_year = False
     valid_month = False
     valid_category = False
     while not valid_year:
-        year = input("Введите год проведения анализа (Пример 2025):\n")
+        year = input("Введите год проведения анализа (Пример 2020):\n")
         year_pattern = re.compile(r'\d{4}')
         if year_pattern.fullmatch(year):
             valid_year = True
